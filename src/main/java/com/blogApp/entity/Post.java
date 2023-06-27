@@ -3,12 +3,15 @@ package com.blogApp.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "posts"
-      //  uniqueConstraints = {@UniqueConstraint(columnNames = {"title"})}
+@Table(name = "posts",
+       uniqueConstraints = {@UniqueConstraint(columnNames = {"title"})}
       )
 public class Post {
 
@@ -16,12 +19,15 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "title")
+    @Column(name = "title",nullable = false)
     private String title;
 
-    @Column(name = "description")
+    @Column(name = "description",nullable = false)
     private String description;
 
-    @Column(name = "content")
+    @Column(name = "content",nullable = false)
     private String content;
+
+    @OneToMany(mappedBy ="post", cascade = CascadeType.ALL, orphanRemoval = true)
+    Set<Comment> comments=new HashSet<>();
 }
