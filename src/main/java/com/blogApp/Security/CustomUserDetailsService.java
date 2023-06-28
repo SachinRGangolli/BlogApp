@@ -17,13 +17,10 @@ import java.util.stream.Collectors;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-
     private UserRepository userRepo;
-
     public CustomUserDetailsService(UserRepository userRepo) {
         this.userRepo = userRepo;
     }
-
     @Override
     public UserDetails loadUserByUsername(String userNameOrEmail) throws UsernameNotFoundException {
         User user = userRepo.findByUserNameOrEmail(userNameOrEmail, userNameOrEmail).orElseThrow(
